@@ -24,6 +24,7 @@ dependencies:
   secp256k1: ^0.2.2
   uuid: ^2.2.2
   bs58: ^1.0.1
+  hash: ^1.0.1
   flutter:
     sdk: flutter
 
