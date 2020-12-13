@@ -1,32 +1,34 @@
-import 'dart:typed_data';
-
 import 'package:hash/hash.dart';
 import 'package:secp256k1/secp256k1.dart';
 import 'package:bs58/bs58.dart';
+import 'package:convert/convert.dart';
 
 String gerarEndereco(PublicKey chavePublica) {
   //Gera o endereço a partir de uma chave pública ECDSA
   var _cPub =
       '04${chavePublica.toHex()}'; //Adiciona 04 ao inicio da chave publica
-  var _hash256 =
-      SHA256().update(_cPub.codeUnits); // Gera um hash via sha256 a partir do
-  var _hash160 = RIPEMD160().update(_hash256.digest());
-  print(Uint8List.fromList(_hash160.digest()).toString());
-  var _enderecoPublicoA = [
-    00,
-  ];
-  _enderecoPublicoA.addAll(_hash160.digest());
-  _hash256 = SHA256().update(_enderecoPublicoA.toString().codeUnits);
-  var checksum = SHA256().update(_hash256.toString().codeUnits);
+  var _hash256 = SHA256()
+      .update(_cPub.codeUnits)
+      .digest(); // Gera um hash via sha256 a partir da chave publica alterada
+  var _hash160 = RIPEMD160().update(_hash256);
 
-  _enderecoPublicoA.addAll(checksum.toString().codeUnits);
+  var _enderecoPublicoA =
+      '${hex.encode('x00'.codeUnits)}${hex.encode(_hash160.digest()).toString()}';
 
-  var tmpEndPubB = Uint8List.fromList(_enderecoPublicoA.toString().codeUnits);
-  var _enderecoPublicoB = base58.encode(tmpEndPubB);
-  return _enderecoPublicoB.toString();
+  _hash256 = SHA256().update(_enderecoPublicoA.codeUnits).digest();
+
+  var _checksum =
+      hex.encode(SHA256().update(_hash256.toString().codeUnits).digest());
+
+  var _enderecoPublicoB = base58.encode(hex.decode(
+      '$_enderecoPublicoA${_checksum.toString().substring(_checksum.length - 4, _checksum.length)}'));
+
+  return _enderecoPublicoB;
 }
 
 main() {
   var prKey = PrivateKey.generate();
-  print(gerarEndereco(prKey.publicKey));
+  var endereco = gerarEndereco(prKey.publicKey);
+  print(endereco);
+  print(endereco.length);
 }
