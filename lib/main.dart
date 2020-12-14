@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rdve_wallet/componentes/novoUsuario.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: PaginaInicial('Carteira RDVE'),
+      //home: PaginaInicial('Carteira RDVE'),
+      home: NovoUsuario(),
     );
   }
 }
@@ -35,17 +37,6 @@ class PaginaInicial extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                "Usuário",
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-              ),
-              Spacer(),
-              Icon(
-                Icons.account_box,
-                color: Colors.blueGrey,
-                size: 200,
-              ),
-              Text("Parece que ainda não há um usuário cadastrado"),
               Spacer(),
             ],
           ),

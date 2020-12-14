@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hash/hash.dart';
 import 'package:secp256k1/secp256k1.dart';
 import 'package:uuid/uuid.dart';
@@ -45,18 +47,19 @@ class Eleitor {
     var novaId = Uuid();
     this.id = novaId.v4();
     this.chavePrivada = PrivateKey.generate();
+    this.endereco = gerarEndereco(this.chavePrivada.publicKey);
   }
 
   String assinar(String mensagem) {
     return this.chavePrivada.signature(mensagem).toString();
   }
 
-  Map<String, String> paraJson() {
-    return {
+  String paraJson() {
+    return json.encode({
       'id': this.id,
       'nome': this.nome,
       'endereco': this.endereco,
       'chavePublica': this.chavePrivada.publicKey.toString(),
-    };
+    });
   }
 }
