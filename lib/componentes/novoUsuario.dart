@@ -17,8 +17,8 @@ class _NovoUsuarioState extends State<NovoUsuario> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('O nome do eleitor não pode estar vazio.'),
-                Text('Inclua o nome do eleitor e tente novamente'),
+                Text(
+                    'O nome do eleitor não pode estar vazio. Inclua o nome do eleitor e tente novamente'),
               ],
             ),
           ),
