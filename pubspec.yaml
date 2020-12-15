@@ -1,5 +1,5 @@
 name: rdve_wallet
-description: A new Flutter project.
+description: Carteira para gerenciamento de chaves do projeto RDVE.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
