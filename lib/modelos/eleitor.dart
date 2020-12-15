@@ -60,6 +60,7 @@ class Eleitor {
       'nome': this.nome,
       'endereco': this.endereco,
       'chavePublica': this.chavePrivada.publicKey.toString(),
+      'chavePrivada': this.chavePrivada.toHex(),
     });
   }
 }

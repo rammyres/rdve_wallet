@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NovoUsuario extends StatefulWidget {
   @override
@@ -7,6 +8,15 @@ class NovoUsuario extends StatefulWidget {
 }
 
 class _NovoUsuarioState extends State<NovoUsuario> {
+  Future<void> salvarDados(Eleitor eleitor) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('nome', eleitor.nome);
+    prefs.setString('endereco', eleitor.endereco);
+    prefs.setString('id', eleitor.id);
+    prefs.setString('chavePrivada', eleitor.chavePrivada.toHex());
+    prefs.setString('chavePublica', eleitor.chavePrivada.publicKey.toHex());
+  }
+
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -35,11 +45,13 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     );
   }
 
-  final controleNome = TextEditingController(text: "Nome");
+  final controleNome = TextEditingController();
 
   void novoEleitor(String nome) {
     var eleitor = Eleitor.gerarNovo(nome);
     print(eleitor.paraJson());
+    salvarDados(eleitor);
+    Navigator.pop(context);
   }
 
   bool estaVazio() {
