@@ -1,16 +1,8 @@
-# rdve_wallet
+# RDVE Wallet
 
-A new Flutter project.
+Carteira (app de gestão de chaves) do projeto RDVE. 
 
-## Getting Started
+## Começando
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A ideia desse projeto é compor uma carteira offline, que servirá para gerir as chaves dos usuários do projeto RDVE. 
+Ela também permitirá comunicação offline com as urnas e terminais usados no projeto, através da geração de QR Codes para requisição de cadastamento e votação. 
