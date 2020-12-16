@@ -9,7 +9,7 @@ class Usuario extends StatefulWidget {
 }
 
 class _UsuarioState extends State<Usuario> {
-  Eleitor eleitor;
+  final Eleitor eleitor;
   _UsuarioState(this.eleitor);
   @override
   Widget build(BuildContext context) {
