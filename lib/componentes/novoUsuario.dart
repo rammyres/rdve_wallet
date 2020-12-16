@@ -10,6 +10,9 @@ class NovoUsuario extends StatefulWidget {
 }
 
 class _NovoUsuarioState extends State<NovoUsuario> {
+  var textoAviso = "";
+  var corTexto = Colors.blueAccent;
+
   Future<void> salvarDados(Eleitor eleitor) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('nome', eleitor.nome);
@@ -40,7 +43,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     }
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _alerta({String mensagem, String botao}) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -50,14 +53,13 @@ class _NovoUsuarioState extends State<NovoUsuario> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(
-                    'O nome do eleitor não pode estar vazio. Inclua o nome do eleitor e tente novamente'),
+                Text(mensagem),
               ],
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Entendi'),
+              child: Text(botao),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -68,7 +70,18 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     );
   }
 
-  final controleNome = TextEditingController();
+  TextEditingController controleNome;
+
+  void aoMudar() {
+    setState(() {
+      this.textoAviso = controleNome.text.contains(" ")
+          ? ""
+          : "(Você deve digitar o nome completo)";
+      this.corTexto = controleNome.text.contains(" ")
+          ? Colors.blueAccent
+          : Colors.redAccent;
+    });
+  }
 
   void novoEleitor(String nome) {
     var eleitor = Eleitor.gerarNovo(nome);
@@ -88,40 +101,56 @@ class _NovoUsuarioState extends State<NovoUsuario> {
   @override
   void initState() {
     _carregarUsuario();
+    controleNome = TextEditingController();
+    //controleNome.addListener(() => aoMudar());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Novo eleitor"),
-        ),
-        body: Column(
-          children: [
-            Text(
-              "Parece que ainda não existe eleitor cadastrado vamos cadastrar você agora",
-              style: TextStyle(fontSize: 18),
+      appBar: AppBar(
+        title: Text("Novo eleitor"),
+      ),
+      body: Column(
+        children: [
+          Text(
+            "Parece que ainda não existe eleitor cadastrado. Vamos cadastrar você agora.",
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
             ),
-            Spacer(),
-            TextField(
-              controller: controleNome,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Nome do eleitor',
+          ),
+          Spacer(),
+          TextField(
+            controller: controleNome,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderSide: BorderSide(color: corTexto),
               ),
+              labelText: 'Nome do eleitor $textoAviso',
             ),
-            FlatButton(
-              child: Text(
-                "Adicionar",
-                style: TextStyle(fontSize: 18, color: Colors.blue),
-              ),
-              onPressed: () {
-                estaVazio() ? _showMyDialog() : novoEleitor(controleNome.text);
-              },
+            onChanged: (texto) => aoMudar(),
+          ),
+          FlatButton(
+            child: Text(
+              "Adicionar",
+              style: TextStyle(fontSize: 18, color: Colors.blue),
             ),
-            Spacer(),
-          ],
-        ));
+            onPressed: () {
+              estaVazio()
+                  ? _alerta(
+                      mensagem:
+                          "O nome do eleitor não pode estar vazio. Inclua o nome do eleitor e tente novamente",
+                      botao: "entendi",
+                    )
+                  : novoEleitor(controleNome.text);
+            },
+          ),
+          Spacer(),
+        ],
+      ),
+    );
   }
 }
