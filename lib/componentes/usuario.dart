@@ -18,7 +18,7 @@ class _UsuarioState extends State<Usuario> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Oi ${this.eleitor.nome}",
+          "Oi ${this.eleitor.nome.substring(0, this.eleitor.nome.indexOf(" "))}",
           style: TextStyle(
             fontSize: 28,
           ),

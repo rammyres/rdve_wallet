@@ -26,7 +26,13 @@ class DialogoRequisicaoCadastramento extends StatelessWidget {
             Container(
               alignment: Alignment.bottomRight,
               child: FlatButton(
-                child: Text("Sair"),
+                child: Text(
+                  "Sair",
+                  style: TextStyle(
+                    color: Colors.lightBlue[500],
+                    fontSize: 20,
+                  ),
+                ),
                 onPressed: () => Navigator.pop(context),
               ),
             ),

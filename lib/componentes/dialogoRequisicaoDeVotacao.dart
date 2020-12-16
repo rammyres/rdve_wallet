@@ -28,7 +28,13 @@ class DialogoRequisicaoDeVotacao extends StatelessWidget {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Text("Sair"),
+                child: Text(
+                  "Sair",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.lightBlue[500],
+                  ),
+                ),
               ),
             ),
           ],
