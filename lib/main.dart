@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       //home: PaginaInicial('Carteira RDVE'),
-      home: Usuario(),
+      home: NovoUsuario(),
     );
   }
 }

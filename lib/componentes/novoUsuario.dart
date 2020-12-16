@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rdve_wallet/componentes/usuario.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
+import 'package:secp256k1/secp256k1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NovoUsuario extends StatefulWidget {
@@ -15,6 +17,27 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     prefs.setString('id', eleitor.id);
     prefs.setString('chavePrivada', eleitor.chavePrivada.toHex());
     prefs.setString('chavePublica', eleitor.chavePrivada.publicKey.toHex());
+  }
+
+  _carregarUsuario() async {
+    Eleitor _eleitor;
+    final prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('id'));
+    if (prefs.getString('id').isNotEmpty) {
+      setState(() {
+        _eleitor = Eleitor(
+          prefs.getString('id') ?? "",
+          prefs.getString('nome') ?? "",
+          prefs.getString('endereco') ?? "",
+          PrivateKey.fromHex(prefs.getString('chavePrivada') ?? ""),
+        );
+      });
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => new Usuario(_eleitor)),
+      );
+    }
   }
 
   Future<void> _showMyDialog() async {
@@ -51,7 +74,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     var eleitor = Eleitor.gerarNovo(nome);
     print(eleitor.paraJson());
     salvarDados(eleitor);
-    Navigator.pop(context);
+    _carregarUsuario();
   }
 
   bool estaVazio() {
@@ -63,6 +86,12 @@ class _NovoUsuarioState extends State<NovoUsuario> {
   }
 
   @override
+  void initState() {
+    _carregarUsuario();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -70,6 +99,10 @@ class _NovoUsuarioState extends State<NovoUsuario> {
         ),
         body: Column(
           children: [
+            Text(
+              "Parece que ainda não existe eleitor cadastrado vamos cadastrar você agora",
+              style: TextStyle(fontSize: 18),
+            ),
             Spacer(),
             TextField(
               controller: controleNome,
@@ -78,10 +111,10 @@ class _NovoUsuarioState extends State<NovoUsuario> {
                 labelText: 'Nome do eleitor',
               ),
             ),
-            RaisedButton(
+            FlatButton(
               child: Text(
                 "Adicionar",
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18, color: Colors.blue),
               ),
               onPressed: () {
                 estaVazio() ? _showMyDialog() : novoEleitor(controleNome.text);
