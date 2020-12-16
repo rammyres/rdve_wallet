@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rdve_wallet/componentes/dialogoRequisicaoDeVotacao.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
+import 'package:rdve_wallet/componentes/dialogoRequisicaoCadastramento.dart';
 
 class Usuario extends StatefulWidget {
   Eleitor eleitor;
@@ -67,7 +69,14 @@ class _UsuarioState extends State<Usuario> {
                             color: Colors.white,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (ctx) {
+                              return DialogoRequisicaoCadastramento(eleitor);
+                            },
+                          );
+                        },
                       ),
                       RaisedButton(
                         color: Colors.lightBlue,
@@ -78,7 +87,14 @@ class _UsuarioState extends State<Usuario> {
                             color: Colors.white,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (ctx) {
+                              return DialogoRequisicaoDeVotacao(eleitor);
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),

@@ -22,7 +22,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
   _carregarUsuario() async {
     Eleitor _eleitor;
     final prefs = await SharedPreferences.getInstance();
-    print(prefs.getString('id'));
+
     if (prefs.getString('id').isNotEmpty) {
       setState(() {
         _eleitor = Eleitor(

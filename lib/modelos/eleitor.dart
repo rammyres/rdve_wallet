@@ -50,8 +50,23 @@ class Eleitor {
     this.endereco = gerarEndereco(this.chavePrivada.publicKey);
   }
 
-  String assinar(String mensagem) {
+  String _assinar(String mensagem) {
     return this.chavePrivada.signature(mensagem).toString();
+  }
+
+  String requisicaoDeVotacao() {
+    String timestamp = DateTime.now().microsecondsSinceEpoch.toString();
+
+    String dados =
+        hex.encode("${this.id}:${this.endereco}:$timestamp".codeUnits);
+
+    return json.encode({
+      'header': 'requisitaVoto',
+      'id': this.id,
+      'endereco': this.endereco,
+      'timestamp': timestamp,
+      'assinatura': this._assinar(dados),
+    });
   }
 
   String paraJson() {
@@ -60,7 +75,6 @@ class Eleitor {
       'nome': this.nome,
       'endereco': this.endereco,
       'chavePublica': this.chavePrivada.publicKey.toString(),
-      'chavePrivada': this.chavePrivada.toHex(),
     });
   }
 }
