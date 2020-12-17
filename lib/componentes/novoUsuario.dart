@@ -4,6 +4,8 @@ import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:secp256k1/secp256k1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dialogoAlerta.dart';
+
 class NovoUsuario extends StatefulWidget {
   @override
   _NovoUsuarioState createState() => _NovoUsuarioState();
@@ -43,33 +45,6 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     }
   }
 
-  Future<void> _alerta({String mensagem, String botao}) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Erro'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(mensagem),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(botao),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   TextEditingController controleNome;
 
   void aoMudar() {
@@ -77,13 +52,12 @@ class _NovoUsuarioState extends State<NovoUsuario> {
       this.textoAviso = controleNome.text.contains(" ")
           ? ""
           : "(Você deve digitar o nome completo)";
-      this.corTexto = controleNome.text.contains(" ")
-          ? Colors.blueAccent
-          : Colors.redAccent;
+      this.corTexto =
+          controleNome.text.contains(" ") ? Colors.blueAccent : Colors.red[600];
     });
   }
 
-  void novoEleitor(String nome) {
+  void _novoEleitor(String nome) {
     var eleitor = Eleitor.gerarNovo(nome);
     print(eleitor.paraJson());
     salvarDados(eleitor);
@@ -117,6 +91,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
           Text(
             "Parece que ainda não existe eleitor cadastrado. Vamos cadastrar você agora.",
             style: TextStyle(
+              //fontFamily: "OpenSans",
               fontSize: 28,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
@@ -126,10 +101,15 @@ class _NovoUsuarioState extends State<NovoUsuario> {
           TextField(
             controller: controleNome,
             decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: corTexto),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue, width: 5.0),
               ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: corTexto, width: 3.0),
+              ),
+              hintText: "Insira o nome completo do eleitor",
               labelText: 'Nome do eleitor $textoAviso',
+              labelStyle: TextStyle(color: corTexto),
             ),
             onChanged: (texto) => aoMudar(),
           ),
@@ -140,12 +120,13 @@ class _NovoUsuarioState extends State<NovoUsuario> {
             ),
             onPressed: () {
               estaVazio()
-                  ? _alerta(
+                  ? alerta(
+                      context,
                       mensagem:
                           "O nome do eleitor não pode estar vazio. Inclua o nome do eleitor e tente novamente",
                       botao: "entendi",
                     )
-                  : novoEleitor(controleNome.text);
+                  : _novoEleitor(controleNome.text);
             },
           ),
           Spacer(),
