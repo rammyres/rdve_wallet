@@ -4,7 +4,7 @@ import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:rdve_wallet/componentes/dialogoRequisicaoCadastramento.dart';
 
 class Usuario extends StatefulWidget {
-  Eleitor eleitor;
+  final Eleitor eleitor;
   Usuario(this.eleitor);
   @override
   _UsuarioState createState() => _UsuarioState(this.eleitor);

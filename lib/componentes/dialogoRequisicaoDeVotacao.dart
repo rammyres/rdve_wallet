@@ -20,7 +20,7 @@ class DialogoRequisicaoDeVotacao extends StatelessWidget {
             Text("Para iniciar a votação mostre o QR Code abaixo para a Urna"),
             QrImage(
               data: eleitor.requisicaoDeVotacao(),
-              size: MediaQuery.of(context).size.width * 0.76,
+              size: MediaQuery.of(context).size.width * 0.7,
             ),
             Container(
               alignment: Alignment.bottomRight,

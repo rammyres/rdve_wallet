@@ -21,7 +21,7 @@ class DialogoRequisicaoCadastramento extends StatelessWidget {
                 "Para solicitar o cadastramento mostre este QR Code para o equipamento"),
             QrImage(
               data: eleitor.paraJson(),
-              size: MediaQuery.of(context).size.width * 0.76,
+              size: MediaQuery.of(context).size.width * 0.7,
             ),
             Container(
               alignment: Alignment.bottomRight,
