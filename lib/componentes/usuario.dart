@@ -57,8 +57,9 @@ class _UsuarioState extends State<Usuario> {
                 ),
                 Spacer(flex: 1),
                 Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: ButtonBar(
+                    buttonPadding: EdgeInsets.all(10),
+                    alignment: MainAxisAlignment.center,
                     children: [
                       RaisedButton(
                         color: Colors.lightBlue,
