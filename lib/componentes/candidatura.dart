@@ -13,6 +13,7 @@ class Candidatura extends StatefulWidget {
 class _CandidaturaState extends State<Candidatura> {
   Eleitor eleitor;
   Candidato candidato;
+  TextEditingController numero = TextEditingController();
 
   _CandidaturaState(this.eleitor);
   @override
