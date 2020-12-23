@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rdve_wallet/componentes/dialogoRequisicaoDeVotacao.dart';
+import 'package:rdve_wallet/componentes/novaCandidatura.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:rdve_wallet/componentes/dialogoRequisicaoCadastramento.dart';
 
@@ -13,6 +14,14 @@ class Usuario extends StatefulWidget {
 class _UsuarioState extends State<Usuario> {
   final Eleitor eleitor;
   _UsuarioState(this.eleitor);
+
+  void _irParaCandidatura(BuildContext context) {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new NovaCandidatura(this.eleitor)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +108,19 @@ class _UsuarioState extends State<Usuario> {
                       ),
                     ],
                   ),
+                ),
+                RaisedButton(
+                  color: Colors.lightBlue,
+                  child: Text(
+                    "Ver informações sobre candidatura",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () {
+                    _irParaCandidatura(context);
+                  },
                 ),
                 Spacer(),
               ],

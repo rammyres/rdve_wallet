@@ -7,6 +7,7 @@ import 'package:secp256k1/secp256k1.dart';
 class Candidato {
   String id;
   String numero;
+  String apelido;
   String endereco;
   Map requisicao;
   PrivateKey chavePrivada;
@@ -14,6 +15,7 @@ class Candidato {
   Candidato(
     this.id,
     this.numero,
+    this.apelido,
     this.endereco,
     chavePrivada,
     requisicao,
@@ -22,7 +24,7 @@ class Candidato {
     this.chavePrivada = PrivateKey.fromHex(chavePrivada);
   }
 
-  Candidato.gerarNovo(this.requisicao, this.numero) {
+  Candidato.gerarNovo(this.requisicao, this.apelido, this.numero) {
     this.id = this.requisicao["id"];
     this.chavePrivada = PrivateKey.generate();
     this.endereco = gerarEndereco(this.chavePrivada.publicKey);
@@ -63,12 +65,15 @@ class Candidato {
 
   String registroCandidatura() {
     String timestamp = DateTime.now().microsecondsSinceEpoch.toString();
-    String dados = "registrocandidatura:${this.id}:${this.endereco}$timestamp";
+    String dados = hex.encode(
+        "registrocandidatura:${this.id}:${this.apelido}:${this.endereco}$timestamp"
+            .codeUnits);
     return json.encode(
       {
         "header": "registroCandidatura",
         "id": this.id,
         "numero": this.numero,
+        "apelido": this.apelido,
         "endereco": this.endereco,
         "timestamp": timestamp,
         "chavePublica": this.chavePrivada.publicKey.toHex(),
