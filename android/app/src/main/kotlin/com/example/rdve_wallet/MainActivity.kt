@@ -1,4 +1,4 @@
-package com.example.rdve_wallet
+package io.rdve.wallet
 
 import io.flutter.embedding.android.FlutterActivity
 

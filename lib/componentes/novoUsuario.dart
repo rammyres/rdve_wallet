@@ -4,12 +4,17 @@ import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:secp256k1/secp256k1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'dialogoAlerta.dart';
+
 class NovoUsuario extends StatefulWidget {
   @override
   _NovoUsuarioState createState() => _NovoUsuarioState();
 }
 
 class _NovoUsuarioState extends State<NovoUsuario> {
+  var textoAviso = "";
+  var corTexto = Colors.blueAccent;
+
   Future<void> salvarDados(Eleitor eleitor) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('nome', eleitor.nome);
@@ -40,88 +45,85 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     }
   }
 
-  Future<void> _showMyDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Erro'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(
-                    'O nome do eleitor não pode estar vazio. Inclua o nome do eleitor e tente novamente'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Entendi'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  TextEditingController controleNome;
+
+  void aoMudar() {
+    setState(() {
+      this.textoAviso = controleNome.text.contains(" ")
+          ? ""
+          : "(Você deve digitar o nome completo)";
+      this.corTexto =
+          controleNome.text.contains(" ") ? Colors.blueAccent : Colors.red[600];
+    });
   }
 
-  final controleNome = TextEditingController();
-
-  void novoEleitor(String nome) {
+  void _novoEleitor(String nome) {
     var eleitor = Eleitor.gerarNovo(nome);
     print(eleitor.paraJson());
     salvarDados(eleitor);
     _carregarUsuario();
   }
 
-  bool estaVazio() {
-    bool teste;
-    setState(() {
-      teste = controleNome.text == '';
-    });
-    return teste;
-  }
-
   @override
   void initState() {
     _carregarUsuario();
+    controleNome = TextEditingController();
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Novo eleitor"),
-        ),
-        body: Column(
-          children: [
-            Text(
-              "Parece que ainda não existe eleitor cadastrado vamos cadastrar você agora",
-              style: TextStyle(fontSize: 18),
+      appBar: AppBar(
+        title: Text("Novo eleitor"),
+      ),
+      body: Column(
+        children: [
+          Text(
+            "Parece que ainda não existe eleitor cadastrado. Vamos cadastrar você agora.",
+            style: TextStyle(
+              fontFamily: "OpenSans",
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
             ),
-            Spacer(),
-            TextField(
-              controller: controleNome,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Nome do eleitor',
+          ),
+          Spacer(),
+          TextField(
+            controller: controleNome,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue, width: 5.0),
               ),
-            ),
-            FlatButton(
-              child: Text(
-                "Adicionar",
-                style: TextStyle(fontSize: 18, color: Colors.blue),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: corTexto, width: 3.0),
               ),
-              onPressed: () {
-                estaVazio() ? _showMyDialog() : novoEleitor(controleNome.text);
-              },
+              hintText: "Insira o nome completo do eleitor",
+              labelText: 'Nome do eleitor $textoAviso',
+              labelStyle: TextStyle(color: corTexto),
             ),
-            Spacer(),
-          ],
-        ));
+            onChanged: (texto) => aoMudar(),
+          ),
+          FlatButton(
+            child: Text(
+              "Adicionar",
+              style: TextStyle(fontSize: 18, color: Colors.blue),
+            ),
+            onPressed: () {
+              controleNome.text.isEmpty
+                  ? alerta(
+                      context,
+                      mensagem:
+                          "O nome do eleitor não pode estar vazio. Inclua o nome do eleitor e tente novamente",
+                      botao: "entendi",
+                    )
+                  : _novoEleitor(controleNome.text);
+            },
+          ),
+          Spacer(),
+        ],
+      ),
+    );
   }
 }

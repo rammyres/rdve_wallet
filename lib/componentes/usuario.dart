@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:rdve_wallet/componentes/dialogoRequisicaoDeVotacao.dart';
+import 'package:rdve_wallet/componentes/novaCandidatura.dart';
+import 'package:rdve_wallet/componentes/novoMesario.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:rdve_wallet/componentes/dialogoRequisicaoCadastramento.dart';
 
 class Usuario extends StatefulWidget {
-  Eleitor eleitor;
+  final Eleitor eleitor;
   Usuario(this.eleitor);
   @override
   _UsuarioState createState() => _UsuarioState(this.eleitor);
@@ -13,6 +15,19 @@ class Usuario extends StatefulWidget {
 class _UsuarioState extends State<Usuario> {
   final Eleitor eleitor;
   _UsuarioState(this.eleitor);
+
+  void _irParaCandidatura(BuildContext context) {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => new NovaCandidatura(this.eleitor)));
+  }
+
+  void _irParaOperacao(BuildContext context) {
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => new NovoMesario(this.eleitor)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +47,7 @@ class _UsuarioState extends State<Usuario> {
               vertical: 10,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,8 +72,9 @@ class _UsuarioState extends State<Usuario> {
                 ),
                 Spacer(flex: 1),
                 Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  child: ButtonBar(
+                    buttonPadding: EdgeInsets.all(10),
+                    alignment: MainAxisAlignment.spaceAround,
                     children: [
                       RaisedButton(
                         color: Colors.lightBlue,
@@ -94,6 +110,32 @@ class _UsuarioState extends State<Usuario> {
                               return DialogoRequisicaoDeVotacao(eleitor);
                             },
                           );
+                        },
+                      ),
+                      RaisedButton(
+                        color: Colors.lightBlue,
+                        child: Text(
+                          "Sou operador de urna (mesário)",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          _irParaOperacao(context);
+                        },
+                      ),
+                      RaisedButton(
+                        color: Colors.lightBlue,
+                        child: Text(
+                          "Ver informações sobre candidatura",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          _irParaCandidatura(context);
                         },
                       ),
                     ],

@@ -1,18 +1,34 @@
 import 'dart:convert';
-
+import 'package:bs58/bs58.dart';
+import 'package:convert/convert.dart';
 import 'package:hash/hash.dart';
 import 'package:secp256k1/secp256k1.dart';
-import 'package:uuid/uuid.dart';
-import 'package:convert/convert.dart';
-import 'package:bs58/bs58.dart';
 
-class Eleitor {
+class Candidato {
   String id;
-  String nome;
+  String numero;
+  String apelido;
   String endereco;
+  Map requisicao;
   PrivateKey chavePrivada;
 
-  Eleitor(this.id, this.nome, this.endereco, this.chavePrivada);
+  Candidato(
+    this.id,
+    this.numero,
+    this.apelido,
+    this.endereco,
+    chavePrivada,
+    requisicao,
+  ) {
+    this.requisicao = json.decode(requisicao);
+    this.chavePrivada = PrivateKey.fromHex(chavePrivada);
+  }
+
+  Candidato.gerarNovo(this.requisicao, this.apelido, this.numero) {
+    this.id = this.requisicao["id"];
+    this.chavePrivada = PrivateKey.generate();
+    this.endereco = gerarEndereco(this.chavePrivada.publicKey);
+  }
 
   String gerarEndereco(PublicKey chavePublica) {
     //Gera o endereço a partir de uma chave pública ECDSA
@@ -43,53 +59,26 @@ class Eleitor {
     return _enderecoPublicoB;
   }
 
-  Eleitor.gerarNovo(this.nome) {
-    var novaId = Uuid();
-    this.id = novaId.v4();
-    this.chavePrivada = PrivateKey.generate();
-    this.endereco = gerarEndereco(this.chavePrivada.publicKey);
-  }
-
   String _assinar(String mensagem) {
     return this.chavePrivada.signature(mensagem).toString();
   }
 
-  String requisicaoDeVotacao() {
+  String registroCandidatura() {
     String timestamp = DateTime.now().microsecondsSinceEpoch.toString();
-
     String dados = hex.encode(
-        "requisitaVoto:${this.id}:${this.endereco}:$timestamp".codeUnits);
-
-    return json.encode({
-      'header': 'requisitaVoto',
-      'id': this.id,
-      'endereco': this.endereco,
-      'timestamp': timestamp,
-      'assinatura': this._assinar(dados),
-    });
-  }
-
-  String requererCandidatura() {
-    String timestamp = DateTime.now().microsecondsSinceEpoch.toString();
-    String dados =
-        hex.encode("requisitaCandidatura:${this.id}$timestamp".codeUnits);
+        "registrocandidatura:${this.id}:${this.apelido}:${this.endereco}$timestamp"
+            .codeUnits);
     return json.encode(
       {
-        "header": "requisitaCandidatura",
+        "header": "registroCandidatura",
         "id": this.id,
+        "numero": this.numero,
+        "apelido": this.apelido,
+        "endereco": this.endereco,
         "timestamp": timestamp,
+        "chavePublica": this.chavePrivada.publicKey.toHex(),
         "assinatura": this._assinar(dados),
       },
     );
-  }
-
-  String paraJson() {
-    return json.encode({
-      'header': 'requisitaAlistamento',
-      'id': this.id,
-      'nome': this.nome,
-      'endereco': this.endereco,
-      'chavePublica': this.chavePrivada.publicKey.toString(),
-    });
   }
 }
