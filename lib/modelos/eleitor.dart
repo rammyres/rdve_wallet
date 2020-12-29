@@ -85,6 +85,7 @@ class Eleitor {
 
   String paraJson() {
     return json.encode({
+      'header': 'requisitaAlistamento',
       'id': this.id,
       'nome': this.nome,
       'endereco': this.endereco,

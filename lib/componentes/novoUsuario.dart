@@ -64,14 +64,6 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     _carregarUsuario();
   }
 
-  bool estaVazio() {
-    bool teste;
-    setState(() {
-      teste = controleNome.text == '';
-    });
-    return teste;
-  }
-
   @override
   void initState() {
     _carregarUsuario();
@@ -91,7 +83,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
           Text(
             "Parece que ainda não existe eleitor cadastrado. Vamos cadastrar você agora.",
             style: TextStyle(
-              //fontFamily: "OpenSans",
+              fontFamily: "OpenSans",
               fontSize: 28,
               fontWeight: FontWeight.bold,
               color: Colors.blue,
@@ -119,7 +111,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
               style: TextStyle(fontSize: 18, color: Colors.blue),
             ),
             onPressed: () {
-              estaVazio()
+              controleNome.text.isEmpty
                   ? alerta(
                       context,
                       mensagem:

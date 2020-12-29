@@ -25,7 +25,7 @@ class _NovaCandidaturaState extends State<NovaCandidatura> {
 
   carregarDados(Eleitor eleitor) async {
     final prefs = await SharedPreferences.getInstance();
-    print(prefs.getBool("ehCandidato") ?? false);
+
     if (prefs.getBool("ehCandidato") ?? false) {
       setState(() {
         this._candidato = Candidato(
