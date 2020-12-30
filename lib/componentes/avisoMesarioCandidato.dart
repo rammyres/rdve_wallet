@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:rdve_wallet/componentes/novoUsuario.dart';
 
-class AvisoCandidatoMesario extends StatelessWidget {
+class AvisoMesarioCandidato extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class AvisoCandidatoMesario extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Text(
-            "Candidatos a cargos eletivos não podem atuar como operadores de urna",
+            "Mesário não podem ser candidatos nas eleiçõeos em que estejam trabalhando",
             style: TextStyle(
               color: Colors.blue,
               fontWeight: FontWeight.bold,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rdve_wallet/componentes/novoUsuario.dart';
-import 'package:rdve_wallet/componentes/usuario.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,10 +11,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'RDVE Wallet',
       theme: ThemeData(
+        buttonBarTheme: ButtonBarThemeData(
+          buttonHeight: 60,
+        ),
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      //home: PaginaInicial('Carteira RDVE'),
       home: NovoUsuario(),
     );
   }

@@ -71,75 +71,121 @@ class _UsuarioState extends State<Usuario> {
                   width: 280,
                 ),
                 Spacer(flex: 1),
-                Container(
-                  child: ButtonBar(
-                    buttonPadding: EdgeInsets.all(10),
-                    alignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      RaisedButton(
-                        color: Colors.lightBlue,
-                        child: Text(
-                          "Solicitar cadastramento",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
+                Column(
+                  children: [
+                    ButtonBar(
+                      buttonMinWidth: MediaQuery.of(context).size.width / 3,
+                      buttonPadding: EdgeInsets.all(10),
+                      alignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        RaisedButton(
+                          color: Colors.lightBlue,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.cached,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Alistamento",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (ctx) {
+                                return DialogoRequisicaoCadastramento(eleitor);
+                              },
+                            );
+                          },
                         ),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (ctx) {
-                              return DialogoRequisicaoCadastramento(eleitor);
-                            },
-                          );
-                        },
-                      ),
-                      RaisedButton(
-                        color: Colors.lightBlue,
-                        child: Text(
-                          "Votar",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
+                        RaisedButton(
+                          color: Colors.lightBlue,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.how_to_vote,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Votar",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (ctx) {
+                                return DialogoRequisicaoDeVotacao(eleitor);
+                              },
+                            );
+                          },
                         ),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (ctx) {
-                              return DialogoRequisicaoDeVotacao(eleitor);
-                            },
-                          );
-                        },
-                      ),
-                      RaisedButton(
-                        color: Colors.lightBlue,
-                        child: Text(
-                          "Sou operador de urna (mesário)",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
+                      ],
+                    ),
+                    ButtonBar(
+                      buttonMinWidth: MediaQuery.of(context).size.width / 3,
+                      buttonPadding: EdgeInsets.all(10),
+                      alignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        RaisedButton(
+                          color: Colors.lightBlue,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.account_box,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Sou mesário",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
+                          onPressed: () {
+                            _irParaOperacao(context);
+                          },
                         ),
-                        onPressed: () {
-                          _irParaOperacao(context);
-                        },
-                      ),
-                      RaisedButton(
-                        color: Colors.lightBlue,
-                        child: Text(
-                          "Ver informações sobre candidatura",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
+                        RaisedButton(
+                          color: Colors.lightBlue,
+                          child: Column(
+                            children: [
+                              Icon(
+                                Icons.account_box_outlined,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Sou candidato",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
+                          onPressed: () {
+                            _irParaCandidatura(context);
+                          },
                         ),
-                        onPressed: () {
-                          _irParaCandidatura(context);
-                        },
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                  ],
                 ),
                 Spacer(),
               ],

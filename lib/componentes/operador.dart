@@ -39,15 +39,26 @@ class Operador extends StatelessWidget {
               ),
             ),
             ButtonBar(
-              alignment: MainAxisAlignment.center,
+              alignment: MainAxisAlignment.spaceAround,
+              buttonPadding: EdgeInsets.all(10),
               children: [
                 RaisedButton(
                   color: Colors.blueAccent,
-                  child: Text(
-                    "Liberar alistamento eleitoral",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.file_download,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                      Text(
+                        "Liberar\nalistamento",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                   onPressed: () {
                     dialogoMensagem(
@@ -58,11 +69,21 @@ class Operador extends StatelessWidget {
                 ),
                 RaisedButton(
                   color: Colors.blueAccent,
-                  child: Text(
-                    "Liberar registro de candidatura",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.file_download_done,
+                        color: Colors.white,
+                        size: 40,
+                      ),
+                      Text(
+                        "Registro de\ncandidatura",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                   onPressed: () {
                     dialogoMensagem(
@@ -84,15 +105,26 @@ class Operador extends StatelessWidget {
               ),
             ),
             ButtonBar(
-              alignment: MainAxisAlignment.center,
+              alignment: MainAxisAlignment.spaceAround,
+              buttonPadding: EdgeInsets.all(10),
               children: [
                 RaisedButton(
                   color: Colors.blueAccent,
-                  child: Text(
-                    "Iniciar a votação",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.play_arrow,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Iniciar\nvotação",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                   onPressed: () {
                     dialogoMensagem(
@@ -103,11 +135,21 @@ class Operador extends StatelessWidget {
                 ),
                 RaisedButton(
                   color: Colors.blueAccent,
-                  child: Text(
-                    "Liberar urna para eleitor",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.card_membership,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Liberar\nvotação",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                   onPressed: () {
                     dialogoMensagem(
@@ -118,11 +160,21 @@ class Operador extends StatelessWidget {
                 ),
                 RaisedButton(
                   color: Colors.blueAccent,
-                  child: Text(
-                    "Encerrar a votação",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.stop,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Encerrar\nvotação",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
                   ),
                   onPressed: () {
                     dialogoMensagem(

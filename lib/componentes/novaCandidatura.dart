@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:rdve_wallet/componentes/avisoMesarioCandidato.dart';
 import 'package:rdve_wallet/componentes/candidatura.dart';
 import 'package:rdve_wallet/componentes/dialogoAlerta.dart';
 import 'package:rdve_wallet/componentes/modalApelido.dart';
@@ -26,6 +26,15 @@ class _NovaCandidaturaState extends State<NovaCandidatura> {
   carregarDados(Eleitor eleitor) async {
     final prefs = await SharedPreferences.getInstance();
 
+    if (prefs.getBool("ehMesario") ?? false) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => new AvisoMesarioCandidato(),
+        ),
+      );
+    }
+
     if (prefs.getBool("ehCandidato") ?? false) {
       setState(() {
         this._candidato = Candidato(
@@ -38,7 +47,6 @@ class _NovaCandidaturaState extends State<NovaCandidatura> {
         );
       });
 
-      print(this._candidato ?? false);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
