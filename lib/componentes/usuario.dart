@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rdve_wallet/componentes/dialogoRequisicaoDeVotacao.dart';
+import 'package:rdve_wallet/componentes/modalQR.dart';
 import 'package:rdve_wallet/componentes/novaCandidatura.dart';
 import 'package:rdve_wallet/componentes/novoMesario.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
-import 'package:rdve_wallet/componentes/dialogoRequisicaoCadastramento.dart';
 
 class Usuario extends StatefulWidget {
   final Eleitor eleitor;
@@ -26,6 +25,18 @@ class _UsuarioState extends State<Usuario> {
   void _irParaOperacao(BuildContext context) {
     Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (context) => new NovoMesario(this.eleitor)));
+  }
+
+  void _mostrarModalQR({String mensagem, String dados}) {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) {
+        return ModalQR(
+          mensagem: mensagem,
+          dados: dados,
+        );
+      },
+    );
   }
 
   @override
@@ -97,11 +108,10 @@ class _UsuarioState extends State<Usuario> {
                             ],
                           ),
                           onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (ctx) {
-                                return DialogoRequisicaoCadastramento(eleitor);
-                              },
+                            _mostrarModalQR(
+                              mensagem:
+                                  "Para realizar seu alistamento como eleitor mostre o QR Code abaixo para o dispositivo de coleta",
+                              dados: eleitor.paraJson(),
                             );
                           },
                         ),
@@ -124,11 +134,10 @@ class _UsuarioState extends State<Usuario> {
                             ],
                           ),
                           onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (ctx) {
-                                return DialogoRequisicaoDeVotacao(eleitor);
-                              },
+                            _mostrarModalQR(
+                              mensagem:
+                                  "Para iniciar a votação mostre o QR Code abaixo para a urna",
+                              dados: eleitor.requisicaoDeVotacao(),
                             );
                           },
                         ),

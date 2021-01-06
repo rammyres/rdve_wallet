@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:rdve_wallet/modelos/eleitor.dart';
 
-class DialogoRequisicaoCadastramento extends StatelessWidget {
-  final Eleitor eleitor;
-  DialogoRequisicaoCadastramento(this.eleitor);
+class ModalQR extends StatelessWidget {
+  final String mensagem;
+  final String dados;
+
+  ModalQR({this.mensagem, this.dados});
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -17,10 +18,9 @@ class DialogoRequisicaoCadastramento extends StatelessWidget {
         padding: EdgeInsets.all(14),
         child: Column(
           children: [
-            Text(
-                "Para solicitar o cadastramento mostre este QR Code para o equipamento"),
+            Text(this.mensagem),
             QrImage(
-              data: eleitor.paraJson(),
+              data: this.dados,
               size: MediaQuery.of(context).size.width * 0.7,
             ),
             Container(
