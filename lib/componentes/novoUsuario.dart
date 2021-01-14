@@ -80,30 +80,37 @@ class _NovoUsuarioState extends State<NovoUsuario> {
       ),
       body: Column(
         children: [
-          Text(
-            "Parece que ainda não existe eleitor cadastrado. Vamos cadastrar você agora.",
-            style: TextStyle(
-              fontFamily: "OpenSans",
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.blue,
+          FractionallySizedBox(
+            widthFactor: 0.9,
+            child: Text(
+              "Parece que ainda não existe eleitor cadastrado. Vamos cadastrar você agora.",
+              style: TextStyle(
+                fontFamily: "OpenSans",
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+              ),
+              textAlign: TextAlign.justify,
             ),
           ),
           Spacer(),
-          TextField(
-            controller: controleNome,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue, width: 5.0),
+          FractionallySizedBox(
+            widthFactor: 0.9,
+            child: TextField(
+              controller: controleNome,
+              decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.blue, width: 5.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: corTexto, width: 3.0),
+                ),
+                hintText: "Insira o nome completo do eleitor",
+                labelText: 'Nome do eleitor $textoAviso',
+                labelStyle: TextStyle(color: corTexto),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: corTexto, width: 3.0),
-              ),
-              hintText: "Insira o nome completo do eleitor",
-              labelText: 'Nome do eleitor $textoAviso',
-              labelStyle: TextStyle(color: corTexto),
+              onChanged: (texto) => aoMudar(),
             ),
-            onChanged: (texto) => aoMudar(),
           ),
           FlatButton(
             child: Text(

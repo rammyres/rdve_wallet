@@ -15,12 +15,16 @@ class AvisoMesarioCandidato extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            "Mesário não podem ser candidatos nas eleiçõeos em que estejam trabalhando",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              fontSize: 35,
+          FractionallySizedBox(
+            widthFactor: 0.9,
+            child: Text(
+              "Mesários não podem ser candidatos nas eleiçõeos em que estejam trabalhando",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 35,
+              ),
+              textAlign: TextAlign.justify,
             ),
           ),
           RaisedButton(

@@ -15,12 +15,16 @@ class AvisoCandidatoMesario extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(
-            "Candidatos a cargos eletivos não podem atuar como operadores de urna",
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-              fontSize: 35,
+          FractionallySizedBox(
+            widthFactor: 0.9,
+            child: Text(
+              "Candidatos a cargos eletivos não podem atuar como operadores de urna",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+                fontSize: 35,
+              ),
+              textAlign: TextAlign.justify,
             ),
           ),
           RaisedButton(

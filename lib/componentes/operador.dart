@@ -36,7 +36,7 @@ class Operador extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Operação da urna",
+            "Menu do operador",
             style: TextStyle(fontSize: 28),
           ),
         ),
@@ -44,6 +44,9 @@ class Operador extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              Spacer(
+                flex: 1,
+              ),
               Text(
                 "Opções anteriores ao dia da votação",
                 style: TextStyle(

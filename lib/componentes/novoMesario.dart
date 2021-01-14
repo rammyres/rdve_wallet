@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rdve_wallet/componentes/avisoCandidatoMesario.dart';
+import 'package:rdve_wallet/componentes/novoUsuario.dart';
 import 'package:rdve_wallet/componentes/operador.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:rdve_wallet/modelos/mesario.dart';
@@ -61,6 +62,15 @@ class _NovoMesarioState extends State<NovoMesario> {
     // }
   }
 
+  void _voltarTelaInicial(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => new NovoUsuario(),
+      ),
+    );
+  }
+
   @override
   void initState() {
     carregarDados(widget._eleitor);
@@ -69,41 +79,83 @@ class _NovoMesarioState extends State<NovoMesario> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Registro de mesário",
-          style: TextStyle(
-            fontSize: 28,
+    return WillPopScope(
+      onWillPop: () {
+        _voltarTelaInicial(context);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Registro de mesário",
+            style: TextStyle(
+              fontSize: 28,
+            ),
           ),
         ),
-      ),
-      body: SizedBox.expand(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(
-              "ID do eleitor: ${widget._eleitor.id}",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
+        body: SizedBox.expand(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "ID do eleitor: ${widget._eleitor.id}",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              "Parece que você é um mesário, para registrar sua condição clique no botão abaixo",
-            ),
-            RaisedButton(
-              child: Text("Sou mesário"),
-              onPressed: () {
-                this._mesario = Mesario(
-                  widget._eleitor.id,
-                  widget._eleitor.nome,
-                  widget._eleitor.chavePrivada,
-                );
-                salvarDados();
-                carregarDados(widget._eleitor);
-              },
-            ),
-          ],
+              Spacer(
+                flex: 1,
+              ),
+              FractionallySizedBox(
+                widthFactor: 0.8,
+                child: Text(
+                  "Parece que você é um mesário, para registrar sua condição clique no botão abaixo",
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.blue[700],
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              Spacer(
+                flex: 1,
+              ),
+              ButtonTheme(
+                height: MediaQuery.of(context).size.height / 9,
+                child: RaisedButton(
+                  color: Colors.blueAccent[400],
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.account_box,
+                        color: Colors.white,
+                        size: MediaQuery.of(context).size.height / 10,
+                      ),
+                      Text(
+                        "Sou mesário",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                  onPressed: () {
+                    this._mesario = Mesario(
+                      widget._eleitor.id,
+                      widget._eleitor.nome,
+                      widget._eleitor.chavePrivada,
+                    );
+                    salvarDados();
+                    carregarDados(widget._eleitor);
+                  },
+                ),
+              ),
+              Spacer(
+                flex: 1,
+              ),
+            ],
+          ),
         ),
       ),
     );
