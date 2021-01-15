@@ -139,9 +139,28 @@ class _NovaCandidaturaState extends State<NovaCandidatura> {
                 "Vamos cadastrar sua candidatura",
                 style: TextStyle(
                   fontSize: 25,
+                  color: Colors.blue[700],
+                ),
+                textAlign: TextAlign.center,
+              ),
+              FractionallySizedBox(
+                widthFactor: 0.8,
+                child: Text(
+                  "Ao registrar sua candidatura você tem ciência que não poderá ser operador de urna na eleição atual.",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.red,
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
               ),
-              Text("Apelido do candidato"),
+              Spacer(),
+              Text(
+                "Apelido do candidato",
+                style: TextStyle(
+                  color: Colors.blue,
+                ),
+              ),
               FlatButton(
                 onPressed: () {
                   _obterApelido(context);
@@ -156,6 +175,11 @@ class _NovaCandidaturaState extends State<NovaCandidatura> {
                   ),
                 ),
               ),
+              Spacer(),
+              Text("Numero do candidato",
+                  style: TextStyle(
+                    color: Colors.blue,
+                  )),
               FlatButton(
                 onPressed: () {
                   _obterNumero(context);
@@ -171,51 +195,51 @@ class _NovaCandidaturaState extends State<NovaCandidatura> {
               Spacer(
                 flex: 1,
               ),
-              Container(
-                alignment: Alignment.bottomRight,
-                child: ButtonBar(children: [
-                  RaisedButton(
-                    color: Colors.lightBlue,
-                    child: Row(
-                      children: [
-                        Text(
-                          "Prosseguir",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
-                        Icon(
-                          Icons.arrow_right,
+              FractionallySizedBox(
+                widthFactor: 0.38,
+                child: RaisedButton(
+                  color: Colors.lightBlue,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.account_box_outlined,
+                        size: MediaQuery.of(context).size.width / 6,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        "Registrar candidatura",
+                        style: TextStyle(
+                          fontSize: 18,
                           color: Colors.white,
                         ),
-                      ],
-                    ),
-                    onPressed: () {
-                      if (_apelido != null && _numero != null) {
-                        this._candidato = Candidato.gerarNovo(
-                          json.decode(widget.eleitor.requererCandidatura()),
-                          _apelido,
-                          _numero,
-                        );
-                        salvarDados();
-                        carregarDados(widget.eleitor);
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    new Candidatura(_candidato)));
-                      } else {
-                        alerta(
-                          context,
-                          mensagem: "Preencha os campos apelido e numero",
-                          titulo: "Candidatos não podem ser anonimos",
-                          botao: "Entendi",
-                        );
-                      }
-                    },
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                ]),
+                  onPressed: () {
+                    if (_apelido != null && _numero != null) {
+                      this._candidato = Candidato.gerarNovo(
+                        json.decode(widget.eleitor.requererCandidatura()),
+                        _apelido,
+                        _numero,
+                      );
+                      salvarDados();
+                      carregarDados(widget.eleitor);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  new Candidatura(_candidato)));
+                    } else {
+                      alerta(
+                        context,
+                        mensagem: "Preencha os campos apelido e numero",
+                        titulo: "Candidatos não podem ser anonimos",
+                        botao: "Entendi",
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           ),
