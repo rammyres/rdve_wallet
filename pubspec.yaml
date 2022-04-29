@@ -21,21 +21,22 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  secp256k1: ^0.2.2
-  uuid: ^2.2.2
-  bs58: ^1.0.1
-  hash: ^1.0.1
-  shared_preferences: ^0.5.12+4
-  qr_flutter: ^3.1.0
-  pin_input_text_field: ^3.1.2
-  flutter_markdown: ^0.5.1
+  secp256k1: ^0.3.0
+  uuid: ^3.0.6
+  bs58: ^1.0.2
+  hash: ^1.0.4
+  shared_preferences: ^2.0.13
+  qr_flutter: ^4.0.0
+  pin_input_text_field: ^4.1.2
+  flutter_markdown: ^0.6.10
   flutter:
     sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.4
+  convert: ^3.0.1
 
 dev_dependencies:
   flutter_test:

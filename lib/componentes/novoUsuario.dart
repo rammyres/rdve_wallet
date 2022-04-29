@@ -3,7 +3,7 @@ import 'package:rdve_wallet/componentes/usuario.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:secp256k1/secp256k1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:rdve_wallet/modelos/cores.dart';
 import 'dialogoAlerta.dart';
 
 class NovoUsuario extends StatefulWidget {
@@ -13,7 +13,7 @@ class NovoUsuario extends StatefulWidget {
 
 class _NovoUsuarioState extends State<NovoUsuario> {
   var textoAviso = "";
-  var corTexto = Colors.blueAccent;
+  var corTexto = Cores.azulEnfase;
 
   Future<void> salvarDados(Eleitor eleitor) async {
     final prefs = await SharedPreferences.getInstance();
@@ -53,7 +53,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
           ? ""
           : "(Você deve digitar o nome completo)";
       this.corTexto =
-          controleNome.text.contains(" ") ? Colors.blueAccent : Colors.red[600];
+          controleNome.text.contains(" ") ? Cores.azul : Cores.vermelho[600];
     });
   }
 

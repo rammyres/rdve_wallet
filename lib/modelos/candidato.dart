@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:bs58/bs58.dart';
-import 'package:convert/convert.dart';
 import 'package:hash/hash.dart';
 import 'package:secp256k1/secp256k1.dart';
+import 'package:convert/convert.dart';
 
 class Candidato {
   String id;
