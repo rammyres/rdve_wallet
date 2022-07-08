@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:rdve_wallet/componentes/dialogoRequisicaoDeVotacao.dart';
 import 'package:rdve_wallet/componentes/novaCandidatura.dart';
 import 'package:rdve_wallet/componentes/novoMesario.dart';
+import 'package:rdve_wallet/componentes/novoUsuario.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:rdve_wallet/componentes/dialogoRequisicaoCadastramento.dart';
+import 'package:rdve_wallet/rotas/rotas.dart';
 
 class Usuario extends StatefulWidget {
-  final Eleitor eleitor;
-  Usuario(this.eleitor);
+  Eleitor eleitor;
+  Usuario(BuildContext ctx) {
+    this.eleitor = ModalRoute.of(ctx).settings.arguments as Eleitor;
+  }
+
   @override
   _UsuarioState createState() => _UsuarioState(this.eleitor);
 }
@@ -17,10 +22,15 @@ class _UsuarioState extends State<Usuario> {
   _UsuarioState(this.eleitor);
 
   void _irParaCandidatura(BuildContext context) {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => new NovaCandidatura(this.eleitor)));
+    // Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => new NovaCandidatura(this.eleitor)));
+    Navigator.pushNamed(
+      context,
+      Rotas.NOVA_CANDIDATURA,
+      arguments: eleitor,
+    );
   }
 
   void _irParaOperacao(BuildContext context) {

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rdve_wallet/componentes/usuario.dart';
+
 import 'package:rdve_wallet/modelos/eleitor.dart';
-import 'package:secp256k1/secp256k1.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:rdve_wallet/modelos/cores.dart';
 import 'dialogoAlerta.dart';
+import 'package:rdve_wallet/utils/preferencias.dart';
 
 class NovoUsuario extends StatefulWidget {
   @override
@@ -12,38 +12,9 @@ class NovoUsuario extends StatefulWidget {
 }
 
 class _NovoUsuarioState extends State<NovoUsuario> {
+  Preferencias prefs = Preferencias.sincronizar() as Preferencias;
   var textoAviso = "";
   var corTexto = Cores.azulEnfase;
-
-  Future<void> salvarDados(Eleitor eleitor) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('nome', eleitor.nome);
-    prefs.setString('endereco', eleitor.endereco);
-    prefs.setString('id', eleitor.id);
-    prefs.setString('chavePrivada', eleitor.chavePrivada.toHex());
-    prefs.setString('chavePublica', eleitor.chavePrivada.publicKey.toHex());
-  }
-
-  _carregarUsuario() async {
-    Eleitor _eleitor;
-    final prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getString('id').isNotEmpty) {
-      setState(() {
-        _eleitor = Eleitor(
-          prefs.getString('id') ?? "",
-          prefs.getString('nome') ?? "",
-          prefs.getString('endereco') ?? "",
-          PrivateKey.fromHex(prefs.getString('chavePrivada') ?? ""),
-        );
-      });
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => new Usuario(_eleitor)),
-      );
-    }
-  }
 
   TextEditingController controleNome;
 
@@ -60,13 +31,13 @@ class _NovoUsuarioState extends State<NovoUsuario> {
   void _novoEleitor(String nome) {
     var eleitor = Eleitor.gerarNovo(nome);
     print(eleitor.paraJson());
-    salvarDados(eleitor);
-    _carregarUsuario();
+    this.prefs.salvarDados(eleitor);
+    this.prefs.carregarUsuario();
   }
 
   @override
   void initState() {
-    _carregarUsuario();
+    this.prefs.carregarUsuario();
     controleNome = TextEditingController();
 
     super.initState();
@@ -105,7 +76,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
             ),
             onChanged: (texto) => aoMudar(),
           ),
-          FlatButton(
+          TextButton(
             child: Text(
               "Adicionar",
               style: TextStyle(fontSize: 18, color: Colors.blue),

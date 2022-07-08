@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rdve_wallet/componentes/boas_vindas.dart';
+import 'package:rdve_wallet/componentes/novaCandidatura.dart';
 import 'package:rdve_wallet/componentes/novoUsuario.dart';
+import 'package:rdve_wallet/componentes/usuario.dart';
+import 'rotas/rotas.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,41 +21,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: NovoUsuario(),
-    );
-  }
-}
-
-class PaginaInicial extends StatelessWidget {
-  final String titulo;
-
-  PaginaInicial(this.titulo);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(titulo),
-      ),
-      body: Container(
-        margin: EdgeInsets.all(12),
-        child: SizedBox.expand(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Spacer(),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.account_box,
-          size: 28,
-        ),
-        onPressed: () => {},
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      initialRoute: Rotas.BOAS_VINDAS,
+      routes: {
+        Rotas.BOAS_VINDAS: (ctx) => TelaDeBoasVindas(ctx),
+        Rotas.NOVO_USUARIO: (ctx) => NovoUsuario(),
+        Rotas.NOVA_CANDIDATURA: (ctx) => NovaCandidatura(ctx),
+        Rotas.TELA_USUARIO: (ctx) => Usuario(ctx),
+      },
     );
   }
 }

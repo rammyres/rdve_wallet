@@ -10,10 +10,10 @@ import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NovaCandidatura extends StatefulWidget {
-  final Eleitor eleitor;
-
-  NovaCandidatura(this.eleitor);
-
+  Eleitor eleitor;
+  NovaCandidatura(BuildContext ctx) {
+    this.eleitor = ModalRoute.of(ctx).settings.arguments as Eleitor;
+  }
   @override
   _NovaCandidaturaState createState() => _NovaCandidaturaState();
 }
