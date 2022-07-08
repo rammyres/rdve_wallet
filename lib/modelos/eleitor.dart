@@ -12,7 +12,9 @@ class Eleitor {
   String endereco;
   PrivateKey chavePrivada;
 
-  Eleitor(this.id, this.nome, this.endereco, this.chavePrivada);
+  Eleitor();
+
+  Eleitor.novo(this.id, this.nome, this.endereco, this.chavePrivada);
 
   String gerarEndereco(PublicKey chavePublica) {
     //Gera o endereço a partir de uma chave pública ECDSA

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:rdve_wallet/modelos/eleitor.dart';
 
 import 'package:rdve_wallet/modelos/cores.dart';
+import 'package:rdve_wallet/rotas/rotas.dart';
 import 'dialogoAlerta.dart';
 import 'package:rdve_wallet/utils/preferencias.dart';
 
@@ -12,10 +13,19 @@ class NovoUsuario extends StatefulWidget {
 }
 
 class _NovoUsuarioState extends State<NovoUsuario> {
-  Preferencias prefs = Preferencias.sincronizar() as Preferencias;
+  Preferencias prefs = Preferencias();
   var textoAviso = "";
   var corTexto = Cores.azulEnfase;
 
+  Future<void> carregarPrefs() async {
+    Preferencias prefs = await Preferencias.sincronizar();
+    print(prefs);
+    this.prefs = prefs;
+  }
+
+  _NovoUsuarioState() {
+    carregarPrefs();
+  }
   TextEditingController controleNome;
 
   void aoMudar() {
@@ -33,6 +43,7 @@ class _NovoUsuarioState extends State<NovoUsuario> {
     print(eleitor.paraJson());
     this.prefs.salvarDados(eleitor);
     this.prefs.carregarUsuario();
+    Navigator.of(context).pushNamed(Rotas.TELA_USUARIO);
   }
 
   @override

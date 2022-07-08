@@ -2,14 +2,16 @@ import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:secp256k1/secp256k1.dart';
 import "dart:async";
+import 'dart:convert';
 
 class Preferencias {
   Eleitor eleitor;
-  SharedPreferences prefs;
+  Map<String, dynamic> prefs = Map();
   bool inicializado = false;
 
+  Preferencias();
   Preferencias._sincronizar(SharedPreferences p) {
-    this.prefs = p;
+    this.prefs = json.decode(p.toString());
   }
 
   static Future<Preferencias> sincronizar() async {
@@ -19,21 +21,23 @@ class Preferencias {
   }
 
   Future<void> salvarDados(Eleitor eleitor) async {
-    prefs.setString('nome', eleitor.nome);
-    prefs.setString('endereco', eleitor.endereco);
-    prefs.setString('id', eleitor.id);
-    prefs.setString('chavePrivada', eleitor.chavePrivada.toHex());
-    prefs.setString('chavePublica', eleitor.chavePrivada.publicKey.toHex());
+    SharedPreferences lPrefs = await SharedPreferences.getInstance();
+    lPrefs.setString('nome', eleitor.nome);
+    lPrefs.setString('endereco', eleitor.endereco);
+    lPrefs.setString('id', eleitor.id);
+    lPrefs.setString('chavePrivada', eleitor.chavePrivada.toHex());
+    lPrefs.setString('chavePublica', eleitor.chavePrivada.publicKey.toHex());
   }
 
   Future<void> carregarUsuario() async {
-    bool st = this.prefs.containsKey("id");
+    SharedPreferences lPrefs = await SharedPreferences.getInstance();
+    bool st = lPrefs.containsKey("id");
     if (st) {
-      eleitor = Eleitor(
-        prefs.getString('id') ?? "",
-        prefs.getString('nome') ?? "",
-        prefs.getString('endereco') ?? "",
-        PrivateKey.fromHex(prefs.getString('chavePrivada') ?? ""),
+      eleitor = Eleitor.novo(
+        lPrefs.getString('id') ?? "",
+        lPrefs.getString('nome') ?? "",
+        lPrefs.getString('endereco') ?? "",
+        PrivateKey.fromHex(lPrefs.getString('chavePrivada') ?? ""),
       );
       inicializado = true;
     }

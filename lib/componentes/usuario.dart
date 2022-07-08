@@ -18,7 +18,7 @@ class Usuario extends StatefulWidget {
 }
 
 class _UsuarioState extends State<Usuario> {
-  final Eleitor eleitor;
+  Eleitor eleitor = Eleitor();
   _UsuarioState(this.eleitor);
 
   void _irParaCandidatura(BuildContext context) {

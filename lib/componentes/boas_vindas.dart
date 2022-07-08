@@ -4,18 +4,23 @@ import 'package:rdve_wallet/rotas/rotas.dart';
 import 'package:rdve_wallet/utils/preferencias.dart';
 
 class TelaDeBoasVindas extends StatelessWidget {
-  Preferencias prefs;
+  Preferencias prefs = Preferencias();
   final BuildContext ctx;
 
   Future<void> carregarPrefs() async {
-    prefs = await Preferencias.sincronizar();
+    Preferencias prefs = await Preferencias.sincronizar();
+    print(prefs);
+    this.prefs = prefs;
   }
 
   void _verificarUsuario() {
     carregarPrefs();
     if (prefs.inicializado) {
-      Navigator.pushReplacementNamed(ctx, Rotas.TELA_USUARIO,
-          arguments: prefs.eleitor);
+      Navigator.pushReplacementNamed(
+        ctx,
+        Rotas.TELA_USUARIO,
+        arguments: prefs.eleitor,
+      );
     }
   }
 
