@@ -2,22 +2,14 @@ import 'package:rdve_wallet/modelos/eleitor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:secp256k1/secp256k1.dart';
 import "dart:async";
-import 'dart:convert';
 
 class Preferencias {
   Eleitor eleitor;
-  Map<String, dynamic> prefs = Map();
+  Map<String, dynamic> prefs = {};
   bool inicializado = false;
 
-  Preferencias();
-  Preferencias._sincronizar(SharedPreferences p) {
-    this.prefs = json.decode(p.toString());
-  }
-
-  static Future<Preferencias> sincronizar() async {
-    SharedPreferences p = await SharedPreferences.getInstance();
-    var preferencias = Preferencias._sincronizar(p);
-    return preferencias;
+  Preferencias() {
+    carregarUsuario();
   }
 
   Future<void> salvarDados(Eleitor eleitor) async {
@@ -30,16 +22,31 @@ class Preferencias {
   }
 
   Future<void> carregarUsuario() async {
-    SharedPreferences lPrefs = await SharedPreferences.getInstance();
-    bool st = lPrefs.containsKey("id");
-    if (st) {
-      eleitor = Eleitor.novo(
-        lPrefs.getString('id') ?? "",
-        lPrefs.getString('nome') ?? "",
-        lPrefs.getString('endereco') ?? "",
-        PrivateKey.fromHex(lPrefs.getString('chavePrivada') ?? ""),
-      );
+    SharedPreferences p = await SharedPreferences.getInstance();
+    this.prefs = {
+      "id": p.getString("id") ?? "",
+      "nome": p.getString("nome") ?? "",
+      "endereco": p.getString("endereco") ?? "",
+      "chavePrivada": p.getString("chavePrivada") ?? ""
+    };
+    if (this.prefs["id"] != "") {
+      this.eleitor = Eleitor.novo(
+          this.prefs['id'] ?? "",
+          this.prefs["nome"] ?? "",
+          this.prefs["endereco"] ?? "",
+          PrivateKey.fromHex(this.prefs['chavePrivada']) ?? "");
       inicializado = true;
     }
+    // SharedPreferences lPrefs = await SharedPreferences.getInstance();
+    // bool st = lPrefs.containsKey("id");
+    // if (st) {
+    //   eleitor = Eleitor.novo(
+    //     lPrefs.getString('id') ?? "",
+    //     lPrefs.getString('nome') ?? "",
+    //     lPrefs.getString('endereco') ?? "",
+    //     PrivateKey.fromHex(lPrefs.getString('chavePrivada') ?? ""),
+    //   );
+    //   inicializado = true;
+    // }
   }
 }

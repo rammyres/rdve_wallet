@@ -8,7 +8,7 @@ class TelaDeBoasVindas extends StatelessWidget {
   final BuildContext ctx;
 
   Future<void> carregarPrefs() async {
-    Preferencias prefs = await Preferencias.sincronizar();
+    Preferencias prefs = Preferencias();
     print(prefs);
     this.prefs = prefs;
   }

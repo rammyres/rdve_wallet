@@ -15,17 +15,10 @@ class NovoUsuario extends StatefulWidget {
 class _NovoUsuarioState extends State<NovoUsuario> {
   Preferencias prefs = Preferencias();
   var textoAviso = "";
-  var corTexto = Cores.azulEnfase;
+  // var corTexto = Cores.azulEnfase;
+  // var corTexto = Colors.blueAccent;
+  var corTexto = Cores.corAzulEnfase;
 
-  Future<void> carregarPrefs() async {
-    Preferencias prefs = await Preferencias.sincronizar();
-    print(prefs);
-    this.prefs = prefs;
-  }
-
-  _NovoUsuarioState() {
-    carregarPrefs();
-  }
   TextEditingController controleNome;
 
   void aoMudar() {
@@ -34,7 +27,9 @@ class _NovoUsuarioState extends State<NovoUsuario> {
           ? ""
           : "(Você deve digitar o nome completo)";
       this.corTexto =
-          controleNome.text.contains(" ") ? Cores.azul : Cores.vermelho[600];
+          // controleNome.text.contains(" ") ? Cores.azul : Cores.vermelho[600];
+          // controleNome.text.contains(" ") ? Colors.blue : Colors.red[600];
+          controleNome.text.contains(" ") ? Cores.corAzul : Cores.corVermelho;
     });
   }
 

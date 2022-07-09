@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Cores {
+  static const Color corAzul = const Color(0xFF2196F3);
+  static const Color corAzulEnfase = const Color(0xFF82B1FF);
+  static const Color corVermelho = const Color(0xFFF44336);
+
   static const MaterialColor azulEnfase = const MaterialColor(
     0xFF82B1FF,
     const <int, Color>{
